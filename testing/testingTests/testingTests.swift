@@ -8,6 +8,17 @@
 import XCTest
 @testable import testing
 
+class NetworkServiceMock: NetworkService {
+    let e: XCTestExpectation
+    init(e: XCTestExpectation) {
+        self.e = e
+    }
+    func callNetwork(completion: @escaping (Result<Void, Error>) -> Void) {
+        completion(.success(()))
+        e.fulfill()
+    }
+}
+
 class testingTests: XCTestCase {
 
     override func setUpWithError() throws {
@@ -19,6 +30,11 @@ class testingTests: XCTestCase {
     }
 
     func testExample() throws {
+        let e = expectation(description: "e")
+        let mock = NetworkServiceMock(e: e)
+        let sut = ContentViewModel(network: mock)
+        sut.buttonTapped()
+        waitForExpectations(timeout: 1)
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         // Any test you write for XCTest can be annotated as throws and async.
