@@ -5,6 +5,9 @@ on:
     branches: 
       - '**'
       - 'main'
+  push:
+    branches:
+      - 'main'
 
 jobs:
   build:
@@ -19,4 +22,10 @@ jobs:
         ruby-version: 2.7.2
         bundler-cache: true
     - name: Run tests
-      run: bundle exec fastlane scan --project "testing/testing.xcodeproj" --code_coverage "true"
+      run: bundle exec fastlane test
+    - name: Download coverage tool
+      run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > cc-test-reporter && chmod +x cc-test-reporter
+    - name: Generate coverage report
+      run: xcrun xccov view --report --json test_output/*.xcresult > coverage.json && rm -rf test_output/*.xcresult
+    - name: Upload coverage report
+      run: ./cc-test-reporter after-build -t xccov -r d77a2e675277c7e11c18758f46845da03f895489a3ff23a97aca85b364250545
