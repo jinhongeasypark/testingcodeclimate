@@ -1,0 +1,10 @@
+lane :test do
+    puts "XXX: running"
+    scan(project: "testing/testing.xcodeproj", code_coverage: true)
+    artifacts = []
+    artifacts << Actions.lane_context[SharedValues::SCAN_GENERATED_XCRESULT_PATH] if Actions.lane_context[SharedValues::SCAN_GENERATED_XCRESULT_PATH]
+    copy_artifacts(artifacts: artifacts, target_path: "test_output")
+    puts "XXX: result path"
+    puts Actions.lane_context[SharedValues::SCAN_GENERATED_XCRESULT_PATH]
+    puts "XXX: finished"
+end
