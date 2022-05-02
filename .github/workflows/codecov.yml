@@ -1,0 +1,29 @@
+name: CodecoV
+
+on:
+  pull_request:
+    branches: 
+      - '**'
+      - 'main'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up ruby env
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7.2
+        bundler-cache: true
+    - name: Run tests
+      run: bundle exec fastlane test
+    - name: Download coverage tool
+      run: curl -Os https://uploader.codecov.io/latest/macos/codecov && chmod +x codecov
+    - name: Upload coverage report
+      run: ./codecov
