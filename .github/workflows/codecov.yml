@@ -1,4 +1,4 @@
-name: Test
+name: CodecoV
 
 on:
   pull_request:
