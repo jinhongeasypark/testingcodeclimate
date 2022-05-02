@@ -77,6 +77,11 @@ class ContentViewModel: ObservableObject {
         let value: Int? = storage.fetch(key: "hi")
         print(value ?? "?")
     }
+
+    func mama() {
+        let value: Int? = storage.fetch(key: "hi")
+        print(value ?? "?")
+    }
 }
 
 struct ContentView: View {
@@ -90,6 +95,7 @@ struct ContentView: View {
             viewModel.wawa()
             viewModel.hihi()
             viewModel.momo()
+            viewModel.mama()
         })
     }
 }
