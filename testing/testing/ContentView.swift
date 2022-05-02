@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+protocol StorageService {
+    func fetch<T>(key: String) -> T? where T: Hashable
+}
+
+class StorageServiceImpl: StorageService {
+    func fetch<T>(key: String) -> T? where T : Hashable {
+        UserDefaults.standard.object(forKey: key) as? T
+    }
+}
+
 protocol NetworkService {
     func callNetwork(completion: @escaping (Result<Void, Error>) -> Void)
 }
@@ -23,8 +33,13 @@ class ContentViewModel: ObservableObject {
     @Published var loaded = false
 
     let network: NetworkService
-    init(network: NetworkService = NetworkServiceImpl()) {
+    let storage: StorageService
+    init(
+        network: NetworkService = NetworkServiceImpl(),
+        storage: StorageService = StorageServiceImpl()
+    ) {
         self.network = network
+        self.storage = storage
     }
 
     func buttonTapped() {
@@ -34,6 +49,33 @@ class ContentViewModel: ObservableObject {
             case .failure(let error): print(error.localizedDescription); self?.loaded = false
             }
         }
+        let value: Int? = storage.fetch(key: "hi")
+        print(value ?? "?")
+    }
+
+    func wowo() {
+        let value: Int? = storage.fetch(key: "hi")
+        print(value ?? "?")
+    }
+
+    func yoyo() {
+        let value: Int? = storage.fetch(key: "hi")
+        print(value ?? "?")
+    }
+
+    func wawa() {
+        let value: Int? = storage.fetch(key: "hi")
+        print(value ?? "?")
+    }
+
+    func hihi() {
+        let value: Int? = storage.fetch(key: "hi")
+        print(value ?? "?")
+    }
+
+    func momo() {
+        let value: Int? = storage.fetch(key: "hi")
+        print(value ?? "?")
     }
 }
 
@@ -41,7 +83,14 @@ struct ContentView: View {
     @StateObject var viewModel = ContentViewModel()
     var body: some View {
         Toggle("WOW", isOn: $viewModel.loaded)
-        Button("TAP", action: viewModel.buttonTapped)
+        Button("TAP", action: {
+            viewModel.buttonTapped()
+            viewModel.wowo()
+            viewModel.yoyo()
+            viewModel.wawa()
+            viewModel.hihi()
+            viewModel.momo()
+        })
     }
 }
 
