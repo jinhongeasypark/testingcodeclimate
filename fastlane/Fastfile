@@ -1,10 +1,7 @@
 lane :test do
-    puts "XXX: running"
     scan(project: "testing/testing.xcodeproj", code_coverage: true)
     artifacts = []
     artifacts << Actions.lane_context[SharedValues::SCAN_GENERATED_XCRESULT_PATH] if Actions.lane_context[SharedValues::SCAN_GENERATED_XCRESULT_PATH]
     copy_artifacts(artifacts: artifacts, target_path: "test_output")
-    puts "XXX: result path"
-    puts Actions.lane_context[SharedValues::SCAN_GENERATED_XCRESULT_PATH]
-    puts "XXX: finished"
+    slather(build_directory: Actions.lane_context[SharedValues::SCAN_ZIP_BUILD_PRODUCTS_PATH], proj: "testing/testing.xcodeproj", scheme: "testing")
 end
