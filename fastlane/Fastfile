@@ -4,4 +4,5 @@ lane :test do
     artifacts << Actions.lane_context[SharedValues::SCAN_GENERATED_XCRESULT_PATH] if Actions.lane_context[SharedValues::SCAN_GENERATED_XCRESULT_PATH]
     copy_artifacts(artifacts: artifacts, target_path: "test_output")
     slather(build_directory: Actions.lane_context[SharedValues::SCAN_ZIP_BUILD_PRODUCTS_PATH], proj: "testing/testing.xcodeproj", scheme: "testing")
+    lcov(project_name: "testing/testing.xcodeproj", scheme: "testing", output_dir: "test_output")
 end
