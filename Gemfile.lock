@@ -37,6 +37,7 @@ GEM
     commander (4.6.0)
       highline (~> 2.0.0)
     concurrent-ruby (1.1.10)
+    coveralls-lcov (1.7.0)
     declarative (0.0.20)
     digest-crc (0.6.4)
       rake (>= 12.0.0, < 14.0.0)
@@ -197,6 +198,7 @@ GEM
     simctl (1.6.8)
       CFPropertyList
       naturally
+    simplecov-lcov (0.8.0)
     slather (2.7.2)
       CFPropertyList (>= 2.2, < 4)
       activesupport
@@ -237,7 +239,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  coveralls-lcov
   fastlane
+  simplecov-lcov
   slather
 
 BUNDLED WITH
