@@ -21,16 +21,19 @@ jobs:
         bundler-cache: true
     - name: Run tests
       run: bundle exec fastlane test
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     - name: Upload to codecov
       uses: codecov/codecov-action@v2
-    - name: Upload to coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: test_output/report.llcov
     - name: Download codeclimate upload tool
       run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > cc-test-reporter && chmod +x cc-test-reporter
     - name: Generate codeclimate coverage report
       run: xcrun xccov view --report --json test_output/*.xcresult > coverage.json && rm -rf test_output/*.xcresult
     - name: Upload coverage report
       run: ./cc-test-reporter after-build -t xccov -r d77a2e675277c7e11c18758f46845da03f895489a3ff23a97aca85b364250545
+    - name: Upload to coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: test_output/report.llcov
+
