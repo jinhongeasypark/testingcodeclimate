@@ -27,7 +27,7 @@ jobs:
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: test_output
+        path-to-lcov: test_output/report.llcov
     - name: Download codeclimate upload tool
       run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > cc-test-reporter && chmod +x cc-test-reporter
     - name: Generate codeclimate coverage report
