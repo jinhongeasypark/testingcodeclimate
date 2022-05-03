@@ -52,36 +52,6 @@ class ContentViewModel: ObservableObject {
         let value: Int? = storage.fetch(key: "hi")
         print(value ?? "?")
     }
-
-    func wowo() {
-        let value: Int? = storage.fetch(key: "hi")
-        print(value ?? "?")
-    }
-
-    func yoyo() {
-        let value: Int? = storage.fetch(key: "hi")
-        print(value ?? "?")
-    }
-
-    func wawa() {
-        let value: Int? = storage.fetch(key: "hi")
-        print(value ?? "?")
-    }
-
-    func hihi() {
-        let value: Int? = storage.fetch(key: "hi")
-        print(value ?? "?")
-    }
-
-    func momo() {
-        let value: Int? = storage.fetch(key: "hi")
-        print(value ?? "?")
-    }
-
-    func mama() {
-        let value: Int? = storage.fetch(key: "hi")
-        print(value ?? "?")
-    }
 }
 
 struct ContentView: View {
@@ -90,12 +60,6 @@ struct ContentView: View {
         Toggle("WOW", isOn: $viewModel.loaded)
         Button("TAP", action: {
             viewModel.buttonTapped()
-            viewModel.wowo()
-            viewModel.yoyo()
-            viewModel.wawa()
-            viewModel.hihi()
-            viewModel.momo()
-            viewModel.mama()
         })
     }
 }
