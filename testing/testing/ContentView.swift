@@ -58,6 +58,10 @@ class ContentViewModel: ObservableObject {
         print(value ?? "?")
     }
 
+    func wawa() {
+        let value: Int? = storage.fetch(key: "hi")
+        print(value ?? "?")
+    }
 }
 
 struct ContentView: View {
@@ -67,6 +71,7 @@ struct ContentView: View {
         Button("TAP", action: {
             viewModel.buttonTapped()
             viewModel.wowo()
+            viewModel.wawa()
         })
     }
 }
