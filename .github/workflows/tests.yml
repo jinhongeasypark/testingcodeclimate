@@ -35,6 +35,8 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: trax-retail/xccov2lcov
+    - name: Checking
+      run: cat coverage.json && ls -a test_output && ls -a && echo ${{ secrets.GITHUB_TOKEN }}
     - name: Prepare for coveralls
       run: swift run xccov2lcov coverage.json > lcov.info
     - name: Upload to coveralls
