@@ -28,12 +28,17 @@ jobs:
     - name: Download codeclimate upload tool
       run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > cc-test-reporter && chmod +x cc-test-reporter
     - name: Generate codeclimate coverage report
-      run: xcrun xccov view --report --json test_output/*.xcresult > coverage.json && rm -rf test_output/*.xcresult
+      run: xcrun xccov view --report --json test_output/*.xcresult > coverage.json
     - name: Upload coverage report
       run: ./cc-test-reporter after-build -t xccov -r d77a2e675277c7e11c18758f46845da03f895489a3ff23a97aca85b364250545
+    - name: Download xccov2lcov tool
+      run: git clone git@github.com:trax-retail/xccov2lcov.git
+    - name: Prepare for coveralls
+      run: swift run xccov2lcov coverage.json > lcov.info
     - name: Upload to coveralls
       uses: coverallsapp/github-action@master
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        path-to-lcov: test_output/report.llcov
-
+        path-to-lcov: lcov.info
+    - name: Clean up
+      run: rm -rf xccov2lcov && rm cc-test-reporter && rm coverage.json 
