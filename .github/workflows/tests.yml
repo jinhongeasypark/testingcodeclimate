@@ -32,7 +32,9 @@ jobs:
     - name: Upload coverage report
       run: ./cc-test-reporter after-build -t xccov -r d77a2e675277c7e11c18758f46845da03f895489a3ff23a97aca85b364250545
     - name: Download xccov2lcov tool
-      run: git clone git@github.com:trax-retail/xccov2lcov.git
+      uses: actions/checkout@v3
+      with:
+        repository: trax-retail/xccov2lcov
     - name: Prepare for coveralls
       run: swift run xccov2lcov coverage.json > lcov.info
     - name: Upload to coveralls
