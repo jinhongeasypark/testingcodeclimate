@@ -11,9 +11,7 @@ on:
 
 jobs:
   build:
-
     runs-on: macos-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up ruby env
@@ -23,9 +21,33 @@ jobs:
         bundler-cache: true
     - name: Run tests
       run: bundle exec fastlane test
-    - name: Download coverage tool
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+    - name: Upload to codecov
+      uses: codecov/codecov-action@v2
+    - name: Download codeclimate upload tool
       run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > cc-test-reporter && chmod +x cc-test-reporter
     - name: Generate coverage report
-      run: xcrun xccov view --report --json test_output/*.xcresult > coverage.json && rm -rf test_output/*.xcresult
+      run: xcrun xccov view --report --json test_output/*.xcresult > coverage.json
     - name: Upload coverage report
       run: ./cc-test-reporter after-build -t xccov -r d77a2e675277c7e11c18758f46845da03f895489a3ff23a97aca85b364250545
+    - name: Checking1
+      continue-on-error: true
+      run: ls -a && echo ${{ secrets.GITHUB_TOKEN }} && ls -a test_output
+    - name: Download xccov2lcov tool
+      uses: actions/checkout@v3
+      with:
+        repository: trax-retail/xccov2lcov
+        path: xccov2lcov
+    - name: Checking2
+      continue-on-error: true
+      run: ls -a && echo ${{ secrets.GITHUB_TOKEN }} && ls -a test_output
+    - name: Prepare for coveralls
+      run: cd xccov2lcov && swift run xccov2lcov ../coverage.json > ../lcov.info && cd ..
+    - name: Upload to coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: lcov.info
+    - name: Clean up
+      run: rm -rf xccov2lcov && rm cc-test-reporter && rm coverage.json 
