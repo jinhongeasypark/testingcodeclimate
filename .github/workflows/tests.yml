@@ -21,8 +21,6 @@ jobs:
         bundler-cache: true
     - name: Run tests
       run: bundle exec fastlane test
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     - name: Upload to codecov
       uses: codecov/codecov-action@v2
     - name: Download codeclimate upload tool
